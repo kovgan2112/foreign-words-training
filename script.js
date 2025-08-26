@@ -10,8 +10,8 @@ let currentIndex = 0;
 
 const totalWord = document.getElementById("total-word");
 const currentWord = document.getElementById("current-word");
-const cardFront = document.querySelector("#card-front h1");
-const cardBackText = document.querySelector("#card-back h1");
+const cardFrontTitle = document.querySelector("#card-front h1");
+const cardBackTitle = document.querySelector("#card-back h1");
 const cardBackExample = document.querySelector("#card-back span");
 
 const backBtn = document.getElementById("back");
@@ -24,7 +24,15 @@ const examCardContainer = document.getElementById("exam-cards");
 
 const flipCard = document.querySelector(".flip-card");
 
-//функция для заполнения карточки словами
+function completeCard(index) {
+    const item = words[index];
+    cardFrontTitle.textContent = item.word;
+    cardBackTitle.textContent = item.translate;
+    cardBackExample.textContent = item.example;
+
+    backBtn.disabled = index === 0;
+    nextBtn.disabled = index === words.length - 1;
+}
 
 flipCard.addEventListener("click", () => {
     flipCard.classList.toggle("active");
@@ -33,6 +41,7 @@ flipCard.addEventListener("click", () => {
 backBtn.addEventListener("click", () => {
     if (currentIndex > 0) {
         currentIndex--;
+        completeCard(currentIndex);
         flipCard.classList.remove("active");
     }
 });
@@ -40,6 +49,7 @@ backBtn.addEventListener("click", () => {
 nextBtn.addEventListener("click", () => {
     if (currentIndex < words.length - 1) {
         currentIndex++;
+        completeCard(currentIndex);
         flipCard.classList.remove("active");
     }
 });
